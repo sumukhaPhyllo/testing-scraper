@@ -66,17 +66,17 @@ Apify.main(async () => {
   });
 
   await page.waitForSelector(".geetest_radar_tip");
-  await page.evaluate(() => {
+  // await page.evaluate(() => {
     // window.scrollBy(0, 100);
     // document.body.scrollTo(100, document.body)
-    document.querySelector(".geetest_radar_tip").click();
-  });
+    // document.querySelector(".geetest_radar_tip").click();
+  // });
 
-  const response = await page.solveRecaptchas();
-  console.log(response);
-  await page.evaluate(() => {
-    document.querySelector("button[type=submit]").click();
-  });
+  // const response = await page.solveRecaptchas();
+  // console.log(response);
+  // await page.evaluate(() => {
+  //   document.querySelector("button[type=submit]").click();
+  // });
   await browser.waitForTarget(() => false);
 });
 // const puppeteer = require('puppeteer-extra')

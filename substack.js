@@ -30,10 +30,11 @@ Apify.main(async () => {
   await page.waitFor(500);
   await page.type("input[name=password]", input.password);
   await page.click("button[type=submit]");
-
+  
   await page.waitFor(3000);
-
+  // console.log('sent captcha to 2captchas')
   await page.solveRecaptchas();
+  // console.log('get the captcha response')
   await page.click("button[type=submit]");
 
   // await Promise.all([

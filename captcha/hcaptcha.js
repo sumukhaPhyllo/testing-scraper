@@ -17,38 +17,35 @@ const launchContext = {
   launcher: puppeteer,
 };
 
-Apify.main(async () => {
-  const browser = await Apify.launchPuppeteer(launchContext);
-  const page = await browser.newPage();
+// Apify.main(async () => {
+//   const browser = await Apify.launchPuppeteer(launchContext);
+//   const page = await browser.newPage();
 
-  await page.goto("https://wsform.com/knowledgebase/hcaptcha/");
-  await page.solveRecaptchas();
+//   await page.goto("https://wsform.com/knowledgebase/hcaptcha/");
+//   await page.solveRecaptchas();
 
-  await browser.waitForTarget(() => false);
-});
+//   await browser.waitForTarget(() => false);
+// });
 
-// const puppeteer = require('puppeteer-extra')
+puppeteer.use(
+  RecaptchaPlugin({
+    provider: {
+      id: '2captcha',
+      // token: '5b3b45a9664fd175329db611ade1c89f',
+      token: '5b3b45a9664fd175329db611ade1c89c',
 
-// const RecaptchaPlugin = require('puppeteer-extra-plugin-recaptcha')
-// puppeteer.use(
-//   RecaptchaPlugin({
-//     provider: {
-//       id: '2captcha',
-//       // token: '5b3b45a9664fd175329db611ade1c89f',
-//       token: '5b3b45a9664fd175329db611ade1c89c',
+    },
+    visualFeedback: true
+  })
+)
 
-//     },
-//     visualFeedback: true
-//   })
-// )
+// puppeteer usage as normal
+puppeteer.launch({ headless: false }).then(async browser => {
+  const page = await browser.newPage()
+  await page.goto('https://wsform.com/knowledgebase/hcaptcha/')
 
-// // puppeteer usage as normal
-// puppeteer.launch({ headless: false }).then(async browser => {
-//   const page = await browser.newPage()
-//   await page.goto('https://wsform.com/knowledgebase/hcaptcha/')
+  await page.solveRecaptchas()
 
-//   await page.solveRecaptchas()
-
-//   await browser.waitForTarget(() => false)
-//   await browser.close()
-// })
+  await browser.waitForTarget(() => false)
+  await browser.close()
+})
